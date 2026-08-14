@@ -1,13 +1,16 @@
-stage('Test') {
-    steps {
-        echo 'Running tests...'
-        sh 'mvn clean test'
-    }
-}
+pipeline {
 
-stage('Build') {
-    steps {
-        echo 'Building Spring Boot application...'
-        sh 'mvn package -DskipTests'
+    agent any
+
+    stages {
+
+        stage('Verify') {
+            steps {
+                echo 'Jenkins successfully connected to GitHub!'
+                echo 'CI is handled by GitHub Actions.'
+                echo 'Jenkins will handle deployment.'
+            }
+        }
+
     }
 }
