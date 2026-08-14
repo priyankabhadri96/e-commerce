@@ -1,14 +1,17 @@
 pipeline {
-
     agent any
 
     stages {
 
-        stage('Verify') {
+        stage('Deploy to EC2') {
             steps {
-                echo 'Jenkins successfully connected to GitHub!'
-                echo 'CI is handled by GitHub Actions.'
-                echo 'Jenkins will handle deployment.'
+                sshagent(['ec2-ssh-key']) {
+                    sh '''
+                        ssh -o StrictHostKeyChecking=no \
+                        ec2-user@ec2-65-2-153-93.ap-south-1.compute.amazonaws.com \
+                        "cd ~/ecommerce && docker-compose pull && docker-compose up -d"
+                    '''
+                }
             }
         }
 
